@@ -3,6 +3,11 @@
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
+void rEncrypt(int key) //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.
+{
+
+}
+
 int main()
 {
     int opt = 0;
