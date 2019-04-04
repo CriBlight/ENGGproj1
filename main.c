@@ -2,6 +2,6 @@
 
 main()
 {
-    printf("test try 2");
+    printf("First Lab Commit");
     return 0;
 }
