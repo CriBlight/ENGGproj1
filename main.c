@@ -8,7 +8,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
     FILE* input, output;
     int opt, key;
     char string1[] = "hello how are you";
-    char eMsg[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , dMsg[] = "dMsg";
+    char eMsg[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , dMsg[] = "";
     printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
     scanf("%d", &opt);
 
@@ -30,8 +30,9 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
         for(int i = 0; eMsg[i] != '\0'; i++)
          {
              printf("%c", eMsg[i]);
+             dMsg[i] = eMsg[i] - 1;
          }
-        printf("\nwe got %s\n", eMsg);
+        printf("\nwe got %s\n", dMsg);
     }
 
 }
