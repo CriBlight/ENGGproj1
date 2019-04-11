@@ -8,6 +8,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
     FILE* input, output;
     int opt, key;
     char string1[] = "hello how are you";
+    char eMsg[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , dMsg[] = "dMsg";
     printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
     scanf("%d", &opt);
 
@@ -17,13 +18,20 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
         scanf("%d", &key);
         
         input = fopen("t.txt", "r");
+        
         if(input == NULL)
         {
             perror("fopen()");
             return;
         }
-        fscanf(input, "%s", string1);
-        printf("we got %s\n", string1);
+        
+        fscanf(input, "%s", eMsg);
+        
+        for(int i = 0; eMsg[i] != '\0'; i++)
+         {
+             printf("%c", eMsg[i]);
+         }
+        printf("\nwe got %s\n", eMsg);
     }
 
 }
