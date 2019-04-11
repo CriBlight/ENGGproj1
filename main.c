@@ -3,14 +3,35 @@
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
-void rEncrypt(int key) //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.
+void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.
 {
+    FILE* input, output;
+    int opt, key;
+    char string1[] = "hello how are you";
+    printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
+    scanf("%d", &opt);
+
+    if(opt == 1) //currently input is hard coded.... maybe change to a typed argument?
+    {
+        printf("Enter key :\n");
+        scanf("%d", &key);
+        
+        input = fopen("t.txt", "r");
+        if(input == NULL)
+        {
+            perror("fopen()");
+            return;
+        }
+        fscanf(input, "%s", string1);
+        printf("we got %s\n", string1);
+    }
 
 }
 
 int main()
 {
-    int opt = 0;
+    
+    int opt = 0, k;
     do 
     {
 
@@ -20,7 +41,7 @@ int main()
         {
             switch(opt)
             {
-                case 1: printf("case 1\n"); //funtion for 1 here
+                case 1: rEncrypt(); //funtion for 1 here
                 break;
                 case 2: printf("case 2\n"); //funtion 2 here
                 break;
