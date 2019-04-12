@@ -3,12 +3,12 @@
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
-void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.
+void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test)
 {
     FILE* input, output;
     int opt, key;
     char string1[] = "hello how are you";
-    char eMsg[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , dMsg[] = "";
+    char eMsg[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , dMsg[] = "";
     printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
     scanf("%d", &opt);
 
