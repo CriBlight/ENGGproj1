@@ -37,14 +37,22 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
             strcat(fMsg, space);
         }
 
-        while(eMsg[i] != '\0')
+        while(fMsg[i] != '\0')
 	       {
-		        printf("%c", eMsg[i]);
-		        dMsg[i] = eMsg[i] - key;
-		        i++;
+		        printf("%c", fMsg[i]);
+		        if(fMsg[i] != space[0])
+                {
+                    dMsg[i] = fMsg[i] - key;
+                }
+                else
+                {
+                    dMsg[i] = fMsg[i];
+                }
+                
+                i++;
 	       }
 
-        printf("\nwe got %s\n", fMsg);
+        printf("\nwe got %s\n", dMsg);
     }
 
 }
