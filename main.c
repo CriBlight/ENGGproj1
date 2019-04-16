@@ -4,7 +4,7 @@
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
-void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test)
+void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test) remember to put everything to uppercase to avoid confusion
 {
     FILE* input, output;
     int opt, key, i = 0;
@@ -43,6 +43,21 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
 		        if(fMsg[i] != space[0])
                 {
                     dMsg[i] = fMsg[i] - key;
+                    
+                    if(dMsg[i] < 65 && dMsg[i] > 39)
+                    {
+                        dMsg[i] += 26; 
+                    }
+                    else if(dMsg[i] > 90 && dMsg[i] < 116)
+                    {
+                        dMsg[i] -= 26;
+                    }
+                    //else
+                    //{
+                        //printf("Key out of range: Key must be a number between 1 and 25");
+                    //} (prints 3 times for some reason?)
+                    
+
                 }
                 else
                 {
