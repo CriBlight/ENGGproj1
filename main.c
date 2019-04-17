@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+//#include <ctype.h>
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
@@ -39,7 +40,11 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
 
         while(fMsg[i] != '\0')
 	       {
-		        printf("%c", fMsg[i]);
+		        if(fMsg[i] >= 97 && fMsg[i] <= 122)
+                {
+                    fMsg[i] -= 32;
+                }
+                printf("%c", fMsg[i]);
 		        if(fMsg[i] != space[0])
                 {
                     dMsg[i] = fMsg[i] - key;
@@ -54,9 +59,9 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
                     }
                     //else
                     //{
-                        //printf("Key out of range: Key must be a number between 1 and 25");
-                    //} (prints 3 times for some reason?)
-                    
+                     //   printf("Key out of range: Key must be a number between 1 and 25");
+                    //} 
+                    //(prints 3 times for some reason?) found issue lowercase letters out of range. find a way to convert all to capital. 
 
                 }
                 else
