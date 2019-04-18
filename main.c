@@ -7,7 +7,7 @@
 
 void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test) remember to put everything to uppercase to avoid confusion
 {
-    FILE* input, output;
+    FILE *input, *output;
     int opt, key, i = 0;
     char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "};
     
@@ -71,7 +71,10 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
                 
                 i++;
 	       }
-
+        
+        output = fopen("Output.txt", "w");
+        fseek(output, 0, SEEK_SET);
+        fprintf(output, "%s\n", dMsg);
         printf("\nwe got %s\n", dMsg);
     }
 

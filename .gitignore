@@ -5,3 +5,6 @@ main.exe
 .vscode/launch.json
 .vscode/settings.json
 .vscode/tasks.json
+Output.txt
+.vscode/ipch/9c441a71d4d315e/MAIN.ipch
+.vscode/ipch/9c441a71d4d315e/mmap_address.bin
