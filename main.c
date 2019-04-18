@@ -44,8 +44,10 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
                 {
                     fMsg[i] -= 32;
                 }
+                
                 printf("%c", fMsg[i]);
-		        if(fMsg[i] != space[0])
+		        
+                if(fMsg[i] != space[0] && !(fMsg[i] < 65))
                 {
                     dMsg[i] = fMsg[i] - key;
                     
