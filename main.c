@@ -23,7 +23,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
         printf("Enter key :\n");
         scanf("%d", &key);
 
-        input = fopen("t.txt", "r");
+        input = fopen("eIn.txt", "r");
 
         if(input == NULL)
         {
@@ -74,7 +74,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
                 i++;
 	       }
         
-        output = fopen("Output.txt", "w");
+        output = fopen("eOut.txt", "w");
         fseek(output, 0, SEEK_SET);
         fprintf(output, "%s\n", dMsg);
         printf("\nYour encrypted message is %s\n", dMsg);
@@ -140,8 +140,12 @@ void rDecrypt() //new funtion, new troubles.
         }
         i++;
     }
-
+    out = fopen("dOut.txt", "w");
+    fseek(out, 0, SEEK_SET);
+    fprintf(out, "%s\n", dcMsg);
     printf("\nYour decrypted message is %s\n", dcMsg);
+    fclose(in);
+    fclose(out);
 }
 
 int main()
