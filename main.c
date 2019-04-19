@@ -148,6 +148,11 @@ void rDecrypt() //new funtion, new troubles.
     fclose(out);
 }
 
+/*void sEncrypt()
+{
+
+}*/
+
 int main()
 {
 
