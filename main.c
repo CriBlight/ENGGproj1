@@ -18,7 +18,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
     printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
     scanf("%d", &opt);
 
-    if(opt == 1) //currently input is hard coded.... maybe change to a typed argument?
+    if(opt == 1) //currently input is hard coded.... maybe change to a typed argument?. Might want to remove the opt becuase not currently needed.
     {
         printf("Enter key :\n");
         scanf("%d", &key);
@@ -77,9 +77,71 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
         output = fopen("Output.txt", "w");
         fseek(output, 0, SEEK_SET);
         fprintf(output, "%s\n", dMsg);
-        printf("\nwe got %s\n", dMsg);
+        printf("\nYour encrypted message is %s\n", dMsg);
+        fclose(input);
+        fclose(output);
     }
 
+}
+
+void rDecrypt() //new funtion, new troubles.
+{
+    FILE *in, *out;
+    int i = 0, dkey;
+    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {" "};
+    
+    memset(inMsg,0,strlen(inMsg));
+    memset(fullMsg,0,strlen(fullMsg));
+    memset(dcMsg,0,strlen(dcMsg));
+
+    printf("Enter key :\n");
+    scanf("%d", &dkey);
+
+    in = fopen("dIn.txt", "r");
+
+    if(in == NULL)
+    {
+        perror("fopen()");
+        return;
+    }
+
+    while(!feof(in))
+    {
+        strcat(fullMsg, inMsg);
+        fscanf(in, "%s", inMsg);
+        strcat(fullMsg, spce);
+    }
+
+    while(fullMsg[i] != '\0')
+    {
+        if(fullMsg[i] >= 97 && fullMsg[i] <= 122)
+        {
+            fullMsg[i] -= 32;
+        }
+
+        printf("%c", fullMsg[i]);
+
+        if(fullMsg[i] != spce[0] && !(fullMsg[i] < 65))
+        {
+            dcMsg[i] = fullMsg[i] + dkey;
+            
+            if(dcMsg[i] < 65 && dcMsg[i] > 39) //if else staement works add here.
+            {
+                dcMsg[i] += 26; 
+            }
+            else if(dcMsg[i] > 90 && dcMsg[i] < 116)
+            {
+                dcMsg[i] -= 26;
+            }
+        }
+        else
+        {
+            dcMsg[i] = fullMsg[i];
+        }
+        i++;
+    }
+
+    printf("\nYour decrypted message is %s\n", dcMsg);
 }
 
 int main()
@@ -97,7 +159,7 @@ int main()
             {
                 case 1: rEncrypt(); //funtion for 1 here
                 break;
-                case 2: printf("case 2\n"); //funtion 2 here
+                case 2: rDecrypt(); //funtion 2 here
                 break;
                 //default: printf("Invaild Option\n");
             }
