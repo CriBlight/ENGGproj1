@@ -37,6 +37,7 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
             fscanf(input, "%s", eMsg);
             strcat(fMsg, space);
         }
+        strcat(fMsg, eMsg);
 
         while(fMsg[i] != '\0')
 	       {
@@ -159,6 +160,8 @@ void sEncrypt()
 
     printf("Please enter key\n");
     scanf("%d", &key);
+
+    key = 26 % key;
 }
 
 int main()

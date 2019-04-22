@@ -26,6 +26,7 @@ void main()
         fscanf(in, "%s", eMsg);
         strcat(fMsg, spce);
     }
+    strcat(fMsg, eMsg);
 
     printf("%s", fMsg);
 
