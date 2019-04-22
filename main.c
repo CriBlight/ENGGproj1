@@ -148,10 +148,18 @@ void rDecrypt() //new funtion, new troubles.
     fclose(out);
 }
 
-/*void sEncrypt()
+void sEncrypt()
 {
+    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "};
+    int key, i = 0;
+    
+    memset(eMsg,0,strlen(eMsg));
+    memset(dMsg,0,strlen(dMsg));
+    memset(fMsg,0,strlen(fMsg));
 
-}*/
+    printf("Please enter key\n");
+    scanf("%d", &key);
+}
 
 int main()
 {
