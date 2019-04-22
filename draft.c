@@ -20,13 +20,14 @@ void main()
         return;
     }
 
+    strcat(fMsg, eMsg);
+
     while(!feof(in))
     {
-        strcat(fMsg, eMsg);
         fscanf(in, "%s", eMsg);
+        strcat(fMsg, eMsg);
         strcat(fMsg, spce);
     }
-    strcat(fMsg, eMsg);
 
     printf("%s", fMsg);
 

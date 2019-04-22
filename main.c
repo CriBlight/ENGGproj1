@@ -31,13 +31,14 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
             return;
         }
 
+        strcat(fMsg, eMsg);
+
         while(!feof(input))
         {
-        	strcat(fMsg, eMsg);
             fscanf(input, "%s", eMsg);
+            strcat(fMsg, eMsg);
             strcat(fMsg, space);
         }
-        strcat(fMsg, eMsg);
 
         while(fMsg[i] != '\0')
 	       {
