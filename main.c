@@ -414,7 +414,7 @@ int main()
     do
     {
 
-        printf("Please Select an option from below: \n 1: Encryption using roation cipher\n 2: Decryption using roation cipher\n 0: Exit \nInput: ");
+        printf("Please Select an option from below: \n 1: Encryption using roation cipher\n 2: Decryption using roation cipher\n 3: Encryption using subsitution cipher\n 4: Decryption using subsitution cipher\n 0: Exit \nInput: ");
         scanf("%d", &opt);
         if(opt > 0 && opt < 9) //9 is currently a placeholder until amount of options is determined.
         {
