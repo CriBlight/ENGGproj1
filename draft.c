@@ -5,16 +5,51 @@
 void sDecrpty()
 {
     FILE *in, *out; //add a file io for key
-    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
-    int i = 0;
+    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[28]; //key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
+    int i = 0, ki = 0, x = 1;
     
     memset(eMsg,0,strlen(eMsg));
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
     in = fopen("test.txt", "r");
-    getKey(in)
+    
+    fscanf(in, "%s", key);
 
+    if(key[ki] == '#')
+    {
+        printf("%s\n", key);
+    }
+    else
+    {
+        printf("No file key found\n");
+        //printf("Enter key : ");
+        //scanf("%s", &key);
+    }
+    
+    if(key[0] = '#')
+    {
+        while(key[x] != '\0')
+        {
+            key[x - 1] = key[x];
+            x++;
+        }
+        key[x - 1] = '\0';
+    }
+
+    x = 0;
+    
+    while (key[x] != '\0')
+    {
+        if(key[x] >= 97 && key[x] <= 122)
+        {
+            key[x] -= 32;
+        }
+        x++;
+    }
+
+    printf("%s\n", key);
+    
     if(in == NULL)
     {
         perror("fopen()");
@@ -166,14 +201,14 @@ void main()
     sDecrpty();
 }
 
-char getKey(FILE *in)
+/*char getKey(FILE *in)
 {
     int i = 0;
     char key[27];
-    if(strch('#'))
+    if(key[i] == '#')
     {
         i++;
-        while(key[i] != '\0')
+        while(key[i] != 10)
         {
             fscanf(in, "%c", key[i]);
             i++;
@@ -188,5 +223,5 @@ char getKey(FILE *in)
     }
     printf("%s", key);
     return key;
-}
+} */
 
