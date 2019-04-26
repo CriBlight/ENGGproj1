@@ -23,11 +23,12 @@ void sDecrpty()
     else
     {
         printf("No file key found\n");
-        //printf("Enter key : ");
-        //scanf("%s", &key);
+        printf("Enter key : ");
+        scanf("%s", &key);
+        fseek(in, 0, SEEK_SET);
     }
     
-    if(key[0] = '#')
+    if(key[0] == '#')
     {
         while(key[x] != '\0')
         {
@@ -187,6 +188,7 @@ void sDecrpty()
     }
     out = fopen("sdOut.txt", "w");
     fseek(out, 0, SEEK_SET);
+    fprintf(out, "#%s\n", key);
     fprintf(out, "%s\n", dMsg);
     printf("\nYour decrypted message is %s\n", dMsg);
     fclose(in);
