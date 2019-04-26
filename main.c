@@ -313,10 +313,7 @@ void sDecrypt()
         strcat(fMsg, spce);
         printf("Error Trap %s\n",fMsg);
     }
-
-    c = sizeof(fMsg);
-    fMsg[c - 1] = '\0';
-
+    
     printf("Input is : %s", fMsg);
 
     while(fMsg[i] != '\0')
