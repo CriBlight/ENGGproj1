@@ -12,7 +12,8 @@ void sDecrpty()
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
-    in = fopen("sdIn.txt", "r");
+    in = fopen("test.txt", "r");
+    getKey(in)
 
     if(in == NULL)
     {
@@ -33,6 +34,7 @@ void sDecrpty()
 
     while(fMsg[i] != '\0')
     {
+        
         if(fMsg[i] >= 97 && fMsg[i] <= 122)
         {
             fMsg[i] -= 32;
@@ -162,5 +164,29 @@ void sDecrpty()
 void main()
 {
     sDecrpty();
+}
+
+char getKey(FILE *in)
+{
+    int i = 0;
+    char key[27];
+    if(strch('#'))
+    {
+        i++;
+        while(key[i] != '\0')
+        {
+            fscanf(in, "%c", key[i]);
+            i++;
+        }
+
+    }
+    else
+    {
+        printf("No file key found\n");
+        printf("Enter key : ");
+        scanf("%s", &key);
+    }
+    printf("%s", key);
+    return key;
 }
 

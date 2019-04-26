@@ -8,83 +8,75 @@
 void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test) remember to put everything to uppercase to avoid confusion
 {
     FILE *input, *output;
-    int opt, key, i = 0;
+    int key, i = 0;
     char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "};
     
     memset(eMsg,0,strlen(eMsg));
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
-    printf("Enter 1 for file input\nEnter 2 for typed encrypt\n");
-    scanf("%d", &opt);
+    printf("Enter key :\n");
+    scanf("%d", &key);
 
-    if(opt == 1) //currently input is hard coded.... maybe change to a typed argument?. Might want to remove the opt becuase not currently needed.
+    input = fopen("eIn.txt", "r");
+
+    if(input == NULL)
     {
-        printf("Enter key :\n");
-        scanf("%d", &key);
-
-        input = fopen("eIn.txt", "r");
-
-        if(input == NULL)
-        {
-            perror("fopen()");
-            return;
-        }
-
-        strcat(fMsg, eMsg);
-
-        while(!feof(input))
-        {
-            fscanf(input, "%s", eMsg);
-            strcat(fMsg, eMsg);
-            strcat(fMsg, space);
-        }
-
-        while(fMsg[i] != '\0')
-	       {
-		        if(fMsg[i] >= 97 && fMsg[i] <= 122)
-                {
-                    fMsg[i] -= 32;
-                }
-                
-                printf("%c", fMsg[i]);
-		        
-                if(fMsg[i] != space[0] && !(fMsg[i] < 65))
-                {
-                    dMsg[i] = fMsg[i] - key;
-                    
-                    if(dMsg[i] < 65 && dMsg[i] > 39)
-                    {
-                        dMsg[i] += 26; 
-                    }
-                    else if(dMsg[i] > 90 && dMsg[i] < 116)
-                    {
-                        dMsg[i] -= 26;
-                    }
-                    //else
-                    //{
-                     //   printf("Key out of range: Key must be a number between 1 and 25");
-                    //} 
-                    //(prints 3 times for some reason?) found issue lowercase letters out of range. find a way to convert all to capital. 
-
-                }
-                else
-                {
-                    dMsg[i] = fMsg[i];
-                }
-                
-                i++;
-	       }
-        
-        output = fopen("eOut.txt", "w");
-        fseek(output, 0, SEEK_SET);
-        fprintf(output, "%s\n", dMsg);
-        printf("\nYour encrypted message is %s\n", dMsg);
-        fclose(input);
-        fclose(output);
+        perror("fopen()");
+        return;
     }
 
+    strcat(fMsg, eMsg);
+
+    while(!feof(input))
+    {
+        fscanf(input, "%s", eMsg);
+        strcat(fMsg, eMsg);
+        strcat(fMsg, space);
+    }
+
+    printf("Input is : %s", fMsg);
+
+    while(fMsg[i] != '\0')
+	{
+		if(fMsg[i] >= 97 && fMsg[i] <= 122)
+        {
+            fMsg[i] -= 32;
+        }
+                
+        //printf("Input is : %c", fMsg[i]);
+		        
+        if(fMsg[i] != space[0] && !(fMsg[i] < 65))
+        {
+            dMsg[i] = fMsg[i] - key;
+                    
+            if(dMsg[i] < 65 && dMsg[i] > 39)
+            {
+                dMsg[i] += 26; 
+            }
+            else if(dMsg[i] > 90 && dMsg[i] < 116)
+            {
+                dMsg[i] -= 26;
+            }
+
+        }
+        else
+        {
+            dMsg[i] = fMsg[i];
+        }
+                
+        i++;
+	}
+        
+    output = fopen("eOut.txt", "w");
+    fseek(output, 0, SEEK_SET);
+    fprintf(output, "%s\n", dMsg);
+    printf("\nYour encrypted message is : %s\n", dMsg);
+    fclose(input);
+    fclose(output);
 }
+
+
 
 void rDecrypt() //new funtion, new troubles.
 {
