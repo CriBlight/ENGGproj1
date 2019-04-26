@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <ctype.h>
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
@@ -146,7 +145,7 @@ void sEncrypt()
 {
     FILE *in, *out; //add a file io for key
     char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
-    int i = 0;
+    int i = 0, c = 0;
     
     memset(eMsg,0,strlen(eMsg));
     memset(dMsg,0,strlen(dMsg));
@@ -169,6 +168,9 @@ void sEncrypt()
         strcat(fMsg, spce);
     }
 
+    c = sizeof(fMsg);
+    fMsg[c - 1] = '\0';
+    
     printf("Input is : %s", fMsg);
 
     while(fMsg[i] != '\0')
@@ -237,9 +239,10 @@ void sEncrypt()
         }
         i++;
     }
+    
     out = fopen("sOut.txt", "w");
     fseek(out, 0, SEEK_SET);
-    fprintf(out, "%s\n", dMsg);
+    fprintf(out, "%s", dMsg);
     printf("\nYour encrypted message is %s\n", dMsg);
     fclose(in);
     fclose(out);
@@ -248,20 +251,58 @@ void sEncrypt()
 void sDecrypt()
 {
     FILE *in, *out; //add a file io for key
-    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
-    int i = 0;
+    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[28]; //key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
+    int i = 0, ki = 0, x = 1, c = 0;
     
     memset(eMsg,0,strlen(eMsg));
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
-    in = fopen("sdIn.txt", "r");
-
+    in = fopen("sOut.txt", "r");
+    
     if(in == NULL)
     {
         perror("fopen()");
         return;
     }
+
+    fscanf(in, "%s", key);
+
+    if(key[ki] == '#')
+    {
+        printf("%s\n", key);
+    }
+    else
+    {
+        printf("No file key found\n");
+        printf("Enter key : ");
+        scanf("%s", &key);
+        fseek(in, 0, SEEK_SET);
+    }
+    
+    if(key[0] == '#')
+    {
+        while(key[x] != '\0')
+        {
+            key[x - 1] = key[x];
+            x++;
+        }
+        key[x - 1] = '\0';
+    }
+
+    x = 0;
+    
+    while (key[x] != '\0')
+    {
+        if(key[x] >= 97 && key[x] <= 122)
+        {
+            key[x] -= 32;
+        }
+        x++;
+    }
+
+    printf("%s\n", key);
+    
 
     strcat(fMsg, eMsg);
 
@@ -270,12 +311,17 @@ void sDecrypt()
         fscanf(in, "%s", eMsg);
         strcat(fMsg, eMsg);
         strcat(fMsg, spce);
+        printf("Error Trap %s\n",fMsg);
     }
+
+    c = sizeof(fMsg);
+    fMsg[c - 1] = '\0';
 
     printf("Input is : %s", fMsg);
 
     while(fMsg[i] != '\0')
     {
+        
         if(fMsg[i] >= 97 && fMsg[i] <= 122)
         {
             fMsg[i] -= 32;
@@ -393,7 +439,8 @@ void sDecrypt()
     }
     out = fopen("sdOut.txt", "w");
     fseek(out, 0, SEEK_SET);
-    fprintf(out, "%s\n", dMsg);
+    fprintf(out, "#%s\n", key);
+    fprintf(out, "%s", dMsg);
     printf("\nYour decrypted message is %s\n", dMsg);
     fclose(in);
     fclose(out);
