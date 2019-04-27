@@ -145,7 +145,7 @@ void sEncrypt()
 {
     FILE *in, *out; //add a file io for key
     char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //KEY = uwgtlzyxjmaksbocinqpevfhdr
-    int i = 0, c = 0;
+    int i = 0;
     
     memset(eMsg,0,strlen(eMsg));
     memset(dMsg,0,strlen(dMsg));
@@ -167,10 +167,16 @@ void sEncrypt()
         strcat(fMsg, eMsg);
         strcat(fMsg, spce);
     }
+ 
+    for(int x = 0; x < sizeof(fMsg); x++)
+    {
+        if(fMsg[x] == '\000')
+        {
+            fMsg[x - 1] = '\000';
+            break;
+        }
+    }
 
-    c = sizeof(fMsg);
-    fMsg[c - 1] = '\0';
-    
     printf("Input is : %s", fMsg);
 
     while(fMsg[i] != '\0')
@@ -311,7 +317,6 @@ void sDecrypt()
         fscanf(in, "%s", eMsg);
         strcat(fMsg, eMsg);
         strcat(fMsg, spce);
-        printf("Error Trap %s\n",fMsg);
     }
     
     printf("Input is : %s", fMsg);
