@@ -7,64 +7,61 @@
 
 /*
 # ROTATION CIPHER (rEncrypt) #
-# Takes in a file, encrypts it by subtracting a user given key value from the ascii values of the charaters, Puts the charaters to uppercase if they are lowercase.
-# There is no return value as the funtion prints the output to a file
-# Inputs are the file and the key given by the user, output is the encrypted message both to a file and to stdout
+# Takes in a file, encrypts it by subtracting a user given key value from the ascii values of the charaters, Puts the charaters to uppercase if they are lowercase, print to both stdout and a file.
+# There is no return value (void) as the funtion prints the output to a file 
+# Inputs are the file, and the key given by the user, output is the encrypted message both to a file and to stdout
 # Check if key is a vaild number, does not take non int input.
 */
 void rEncrypt()
 {
-    FILE *input, *output;
-    int key, i = 0;
-    char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "};
+    FILE *input, *output; //Initialise file streams for input and output
+    int key, i = 0; //Initialise the key and primary loop counter
+    char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "}; //Initialise three charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message.
     
-    memset(eMsg,0,strlen(eMsg));
-    memset(dMsg,0,strlen(dMsg));
-    memset(fMsg,0,strlen(fMsg));
+    memset(eMsg,0,strlen(eMsg)); //Resets the memory of the arrays (clears out junk and previous data)
+    memset(dMsg,0,strlen(dMsg)); //Resets the memory of the arrays (clears out junk and previous data)
+    memset(fMsg,0,strlen(fMsg)); //Resets the memory of the arrays (clears out junk and previous data)
 
-    do
+    do //loop that keeps getting user input till the input is vaild.
     {
-    printf("Enter key :\n");
-    scanf("%d", &key);
-    if(key > 25 || key < 1)
+    printf("Enter key :\n"); //promts the user for input
+    scanf("%d", &key); //gets the input and assigns it to key
+    if(key > 25 || key < 1) //check if the key is out range
     {
-        printf("Invaild key\n");
+        printf("Invaild key\n"); //print error message if invaild
     }
     }while(key > 25 || key < 1);
     
-    input = fopen("eIn.txt", "r");
+    input = fopen("eIn.txt", "r"); //opens the file in read mode and assigns a pointer (location) to input.
 
-    if(input == NULL)
+    if(input == NULL) //If there is no file print an error message and exit to main.
     {
         perror("fopen()");
         return;
     }
-
-    strcat(fMsg, eMsg);
-
-    while(!feof(input))
+    
+    while(!feof(input)) //Takes input string by string until it reaches the end of the file adding a space each time
     {
-        fscanf(input, "%s", eMsg);
-        strcat(fMsg, eMsg);
-        strcat(fMsg, space);
+        fscanf(input, "%s", eMsg); //takes a word in (until it reaches a new line or a space)
+        strcat(fMsg, eMsg); //joins the word gotten above it to the full string
+        strcat(fMsg, space); //addes a space after the word
     }
 
-    printf("Input is : %s", fMsg);
+    printf("Input is : %s", fMsg); //Prints the input (for checking purposes)
 
-    while(fMsg[i] != '\0')
+    while(fMsg[i] != '\0') //Encrpytion loop for each letter
 	{
-		if(fMsg[i] >= 97 && fMsg[i] <= 122)
+		if(fMsg[i] >= 97 && fMsg[i] <= 122) //if the letter is lowercase convert it to upper by subtracting 32 from its ASCII value.
         {
             fMsg[i] -= 32;
         }
                 
-        //printf("Input is : %c", fMsg[i]);
 		        
-        if(fMsg[i] != space[0] && !(fMsg[i] < 65))
+        if(fMsg[i] != space[0] && !(fMsg[i] < 65)) //checks if the charater is a number or a space if it is, print it as is. Otherwise subtract the key from the letters ASCII value.
         {
-            dMsg[i] = fMsg[i] - key;
+            dMsg[i] = fMsg[i] - key; 
                     
-            if(dMsg[i] < 65 && dMsg[i] > 39)
+            if(dMsg[i] < 65 && dMsg[i] > 39) //if the letter, once the key is subtracted, falls out of the ASCII range of letters 26 is added so we come back into the range therefore a - 1 = z.
             {
                 dMsg[i] += 26; 
             }
@@ -76,17 +73,17 @@ void rEncrypt()
         }
         else
         {
-            dMsg[i] = fMsg[i];
+            dMsg[i] = fMsg[i]; //print without encryption
         }
                 
-        i++;
+        i++; //increments i to put the next letter though the loop untill the end of the string is reached
 	}
         
-    output = fopen("eOut.txt", "w");
-    fseek(output, 0, SEEK_SET);
-    fprintf(output, "%s\n", dMsg);
-    printf("\nYour encrypted message is : %s\n", dMsg);
-    fclose(input);
+    output = fopen("eOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
+    fseek(output, 0, SEEK_SET); //Sets the file seeker to the start of the file
+    fprintf(output, "%s\n", dMsg); //prints the encrpted message to a file
+    printf("\nYour encrypted message is : %s\n", dMsg); //prints the encrypted message to stdout
+    fclose(input); //closes the file streams
     fclose(output);
 }
 
@@ -458,6 +455,8 @@ void sDecrypt()
         }
         i++;
     }
+    
+    dMsg[i - 1] = '\0';
     out = fopen("sdOut.txt", "w");
     fseek(out, 0, SEEK_SET);
     fprintf(out, "#%s\n", key);
@@ -483,7 +482,7 @@ int main()
     {
 
         printf("Please Select an option from below: \n 1: Encryption using roation cipher\n 2: Decryption using roation cipher\n 3: Encryption using subsitution cipher\n 4: Decryption using subsitution cipher\n 0: Exit \nInput: "); //prints the selection options
-        scanf("%d", &opt); //gets the selection from the user
+        scanf("%d", &opt); //gets the selection from the user and assigns it to opt
         if(opt > 0 && opt < 5) //checks if the user enters a vaild input
         {
             switch(opt) //
