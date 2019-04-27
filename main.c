@@ -4,7 +4,15 @@
 //Current Build = Tio
 //Auther: Christopher Baita C33289270
 
-void rEncrypt() //funtion prototype. May want to change this to return the decrypted msg, NEEDS FILE AURGUMENT.(test) remember to put everything to uppercase to avoid confusion
+
+/*
+# ROTATION CIPHER (rEncrypt) #
+# Takes in a file, encrypts it by subtracting a user given key value from the ascii values of the charaters, Puts the charaters to uppercase if they are lowercase.
+# There is no return value as the funtion prints the output to a file
+# Inputs are the file and the key given by the user, output is the encrypted message both to a file and to stdout
+# Check if key is a vaild number, does not take non int input.
+*/
+void rEncrypt()
 {
     FILE *input, *output;
     int key, i = 0;
@@ -14,9 +22,16 @@ void rEncrypt() //funtion prototype. May want to change this to return the decry
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
+    do
+    {
     printf("Enter key :\n");
     scanf("%d", &key);
-
+    if(key > 25 || key < 1)
+    {
+        printf("Invaild key\n");
+    }
+    }while(key > 25 || key < 1);
+    
     input = fopen("eIn.txt", "r");
 
     if(input == NULL)
@@ -98,10 +113,12 @@ void rDecrypt() //new funtion, new troubles.
         return;
     }
 
+    strcat(fullMsg, inMsg);
+
     while(!feof(in))
     {
-        strcat(fullMsg, inMsg);
         fscanf(in, "%s", inMsg);
+        strcat(fullMsg, inMsg);
         strcat(fullMsg, spce);
     }
 
@@ -167,13 +184,13 @@ void sEncrypt()
         strcat(fMsg, eMsg);
         strcat(fMsg, spce);
     }
- 
-    for(int x = 0; x < sizeof(fMsg); x++)
+
+    for(int f = 0; f < sizeof(fMsg); f++)
     {
-        if(fMsg[x] == '\000')
+        if(fMsg[f] == '\0')
         {
-            fMsg[x - 1] = '\000';
-            break;
+                fMsg[f - 1] = '\0';
+                break;
         }
     }
 
@@ -246,8 +263,10 @@ void sEncrypt()
         i++;
     }
     
+    dMsg[i] = '\0';
     out = fopen("sOut.txt", "w");
     fseek(out, 0, SEEK_SET);
+    fprintf(out, "#%s\n", key);
     fprintf(out, "%s", dMsg);
     printf("\nYour encrypted message is %s\n", dMsg);
     fclose(in);
@@ -448,39 +467,46 @@ void sDecrypt()
     fclose(out);
 }
 
+
+/*
+# MAIN #
+# Runs when the program starts, Function prints the main menu and promts the user for input.
+# Takes option number for input, returns 0
+# Is an infinite loop so all functions can be used in succession untill exit key is entred (0)
+# Checks if the number is out of range, however will not take non intiger input.
+*/
 int main()
 {
 
-    int opt = 0, k;
-    do
+    int opt = 0; //initialise varaible for menu choice 
+    do //creates an infinite loop which will always return to the menu unless the user enters 0
     {
 
-        printf("Please Select an option from below: \n 1: Encryption using roation cipher\n 2: Decryption using roation cipher\n 3: Encryption using subsitution cipher\n 4: Decryption using subsitution cipher\n 0: Exit \nInput: ");
-        scanf("%d", &opt);
-        if(opt > 0 && opt < 9) //9 is currently a placeholder until amount of options is determined.
+        printf("Please Select an option from below: \n 1: Encryption using roation cipher\n 2: Decryption using roation cipher\n 3: Encryption using subsitution cipher\n 4: Decryption using subsitution cipher\n 0: Exit \nInput: "); //prints the selection options
+        scanf("%d", &opt); //gets the selection from the user
+        if(opt > 0 && opt < 5) //checks if the user enters a vaild input
         {
-            switch(opt)
+            switch(opt) //
             {
-                case 1: rEncrypt(); //funtion for 1 here
-                break;
-                case 2: rDecrypt(); //funtion 2 here
-                break;
-                case 3: sEncrypt();
-                break;
-                case 4: sDecrypt();
-                break;
-                //default: printf("Invaild Option\n");
+                case 1: rEncrypt(); //calls the Rotation encrypt function
+                break; //breaks from the switch statment so that no other functions are called
+                case 2: rDecrypt(); //calls the Rotation decrypt function
+                break; //breaks from the switch statment so that no other functions are called
+                case 3: sEncrypt(); //calls the subsitution encrypt function
+                break; //breaks from the switch statment so that no other functions are called
+                case 4: sDecrypt(); //calls the subsitution encrypt function
+                break; //breaks from the switch statment so that no other functions are called
             }
         }
-        else if(opt == 0)
+        else if(opt == 0) //If the user entred 0, the program will exit.
         {
-            exit(EXIT_SUCCESS);
+            exit(EXIT_SUCCESS); //exit
         }
-        else
+        else //if anything else was entered print an error message.
         {
-            printf("Invalid Input please select an option from the options provided\n");
+            printf("Invalid Input please select an option from the options provided\n"); //warns the user to choose a vaild input
         }
 
-    } while(1);
+    } while(1); //infinite
     return 0;
 }
