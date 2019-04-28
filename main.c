@@ -103,6 +103,7 @@ void rEncrypt()
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file, and the key given by the user, output is the decrypted message both to a file called dOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
+# ODD THING. when this complies on gcc with windows (MinGW) no spaces are printed in between words. I took this and complied it on linux and it works perfect (WHAT!?).
 */
 void rDecrypt()
 {
