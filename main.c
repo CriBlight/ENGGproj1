@@ -103,13 +103,12 @@ void rEncrypt()
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file, and the key given by the user, output is the decrypted message both to a file called dOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
-# ODD THING. when this complies on gcc with windows (MinGW) no spaces are printed in between words. I took this and complied it on linux and it works perfect (WHAT!?).
 */
 void rDecrypt()
 {
     FILE *in, *out; //Initialise file streams for input and output
     int i = 0, f = 1, dckey = 0; //Initialise the key and loop counter
-    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {' ', '\0'}, dkey[3]; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
+    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {' ', '\0'}, dkey[4]; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
     
     memset(inMsg,0,strlen(inMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(fullMsg,0,strlen(fullMsg)); //Resets the memory of the arrays (clears out junk and previous data)
