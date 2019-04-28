@@ -10,7 +10,6 @@
 # There is no return value (void) as the funtion prints the output to a file 
 # Inputs are the file, and the key given by the user, output is the encrypted message both to a file called eOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
-# Right now you will get errors if you try to decrypt the file output by this (due to space character). Please copy result over removing the space at the end to dIn.txt.
 */
 void rEncrypt()
 {
@@ -47,6 +46,15 @@ void rEncrypt()
         strcat(fMsg, space); //adds a space after the word
     }
 
+    for(int f = 0; f < sizeof(fMsg); f++) //Removes the space placed at the end of the string
+    {
+        if(fMsg[f] == '\0')
+        {
+                fMsg[f - 1] = '\0';
+                break;
+        }
+    }
+
     printf("Input is : %s", fMsg); //Prints the input (for checking purposes)
 
     while(fMsg[i] != '\0') //Encrpytion loop for each letter the stops after the end of the string
@@ -81,7 +89,7 @@ void rEncrypt()
     dMsg[i] = '\0'; //assigns the null pointer to the end of the string (so the string will stop reading)     
     output = fopen("eOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
     fseek(output, 0, SEEK_SET); //Sets the file seeker to the start of the file
-    fprintf(output, "%s\n", dMsg); //prints the encrpted message to a file
+    fprintf(output, "%s", dMsg); //prints the encrpted message to a file
     printf("\nYour encrypted message is : %s\n", dMsg); //prints the encrypted message to stdout
     fclose(input); //closes the file streams
     fclose(output);
@@ -94,12 +102,11 @@ void rEncrypt()
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file, and the key given by the user, output is the decrypted message both to a file called dOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
-# Right now you will get errors if you try to decrypt the file output by rEncrypt (due to space character). Please copy result over removing the space at the end to dIn.txt.
 */
 void rDecrypt()
 {
     FILE *in, *out; //Initialise file streams for input and output
-    int i = 0, dkey; //Initialise the key and primary loop counter
+    int i = 0, f = 0, dkey; //Initialise the key and loop counter
     char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {" "}; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
     
     memset(inMsg,0,strlen(inMsg)); //Resets the memory of the arrays (clears out junk and previous data)
@@ -116,7 +123,7 @@ void rDecrypt()
     }
     }while(dkey > 25 || dkey < 1);
 
-    in = fopen("dIn.txt", "r"); //opens the file in read mode and assigns a pointer (location) to in.
+    in = fopen("eOut.txt", "r"); //opens the file in read mode and assigns a pointer (location) to in.
 
     if(in == NULL) //If there is no file print an error message and exit to main.
     {
@@ -130,6 +137,7 @@ void rDecrypt()
         strcat(fullMsg, inMsg); //joins the word gotten above it to the full string
         strcat(fullMsg, spce); //adds a space after the word
     }
+    
     
     printf("Input is : %s", fullMsg); //Prints the input (for checking purposes)
 
