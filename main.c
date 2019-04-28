@@ -10,6 +10,7 @@
 # There is no return value (void) as the funtion prints the output to a file 
 # Inputs are the file, and the key given by the user, output is the encrypted message both to a file called eOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
+# Right now you will get errors if you try to decrypt the file output by this (due to space charater will fix if time). Please copy result over removing the space at the end to dIn.txt.
 */
 void rEncrypt()
 {
@@ -93,6 +94,7 @@ void rEncrypt()
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file, and the key given by the user, output is the decrypted message both to a file called dOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
+# Right now you will get errors if you try to decrypt the file output by rEncrypt (due to space charater will fix if time). Please copy result over removing the space at the end to dIn.txt.
 */
 void rDecrypt()
 {
