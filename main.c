@@ -211,7 +211,7 @@ void sEncrypt()
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
-    do //gets key from either user or default key (did this to save markers some time).
+    do //gets key from either user or default key (did this to save some time).
     {
         printf("Enter 1 to use the default key\nEnter 2 to specify a custom key\nOption : ");
         scanf("%d", &opt);
