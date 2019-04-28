@@ -89,6 +89,7 @@ void rEncrypt()
     dMsg[i] = '\0'; //assigns the null pointer to the end of the string (so the string will stop reading)     
     output = fopen("eOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
     fseek(output, 0, SEEK_SET); //Sets the file seeker to the start of the file
+    fprintf(output, "#%d\n", key);
     fprintf(output, "%s", dMsg); //prints the encrpted message to a file
     printf("\nYour encrypted message is : %s\n", dMsg); //prints the encrypted message to stdout
     fclose(input); //closes the file streams
@@ -106,14 +107,14 @@ void rEncrypt()
 void rDecrypt()
 {
     FILE *in, *out; //Initialise file streams for input and output
-    int i = 0, f = 0, dkey; //Initialise the key and loop counter
-    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {" "}; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
+    int i = 0, f = 0, dckey = 0; //Initialise the key and loop counter
+    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {" "}, dkey[2]; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
     
     memset(inMsg,0,strlen(inMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(fullMsg,0,strlen(fullMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(dcMsg,0,strlen(dcMsg)); //Resets the memory of the arrays (clears out junk and previous data)
 
-    do //loop that keeps getting user input till the input is vaild.
+    /*do //loop that keeps getting user input till the input is vaild.
     {
     printf("Enter key :\n"); //promts the user for input
     scanf("%d", &dkey); //gets the input and assigns it to key
@@ -121,7 +122,7 @@ void rDecrypt()
     {
         printf("Invaild key\n"); //print error message if invaild
     }
-    }while(dkey > 25 || dkey < 1);
+    }while(dkey > 25 || dkey < 1); */
 
     in = fopen("eOut.txt", "r"); //opens the file in read mode and assigns a pointer (location) to in.
 
@@ -131,6 +132,32 @@ void rDecrypt()
         return;
     }
 
+    fscanf(in, "%s", dkey); //Scans the word line of the file
+
+    if(dkey[f] == '#') //if the first word starts with a #, prints the key for checking
+    {
+        printf("%s\n", dkey);
+    }
+    else //if no key is found, the user is prompted for a key
+    {
+        printf("No file key found\n");
+        printf("Enter key : ");
+        scanf("%s", &dkey);
+        fseek(in, 0, SEEK_SET); //the fseek point is then set back to the start of the file to read the message.
+    }
+    
+    if(dkey[0] == '#') //if the first word starts with a #, everything in the word (before a space or new line) is assigned to key
+    {
+        while(dkey[f] != '\0') //loop to remove the # at the start the key
+        {
+            dkey[f - 1] = dkey[f]; //shifts all charaters one to the left
+            f++;
+        }
+        dkey[f - 1] = '\0'; //Assigns the null pointer to the end of the array
+    }
+
+    sscanf(dkey, "%d", &dckey); //coverts the key an int
+    
     while(!feof(in)) //Takes input string by string until it reaches the end of the file adding a space each time
     {
         fscanf(in, "%s", inMsg); //takes a word in (until it reaches a new line or a space)
@@ -150,7 +177,7 @@ void rDecrypt()
 
         if(fullMsg[i] != spce[0] && !(fullMsg[i] < 65)) //checks if the charater is a number or a space if it is, print it as is. Otherwise add the key to the letters ASCII value.
         {
-            dcMsg[i] = fullMsg[i] + dkey;
+            dcMsg[i] = fullMsg[i] + dckey;
             
             if(dcMsg[i] < 65 && dcMsg[i] > 39) //if the letter, once the key is subtracted, falls out of the ASCII range of letters 26 is subtracted so we come back into the range therefore z + 1 = a.
             {
