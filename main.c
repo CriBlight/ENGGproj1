@@ -10,7 +10,7 @@
 # There is no return value (void) as the funtion prints the output to a file 
 # Inputs are the file, and the key given by the user, output is the encrypted message both to a file called eOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
-# Right now you will get errors if you try to decrypt the file output by this (due to space charater will fix if time). Please copy result over removing the space at the end to dIn.txt.
+# Right now you will get errors if you try to decrypt the file output by this (due to space character). Please copy result over removing the space at the end to dIn.txt.
 */
 void rEncrypt()
 {
@@ -78,7 +78,7 @@ void rEncrypt()
                 
         i++; //increments i to put the next letter though the loop untill the end of the string is reached
 	}
-        
+    dMsg[i] = '\0'; //assigns the null pointer to the end of the string (so the string will stop reading)     
     output = fopen("eOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
     fseek(output, 0, SEEK_SET); //Sets the file seeker to the start of the file
     fprintf(output, "%s\n", dMsg); //prints the encrpted message to a file
@@ -94,7 +94,7 @@ void rEncrypt()
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file, and the key given by the user, output is the decrypted message both to a file called dOut.txt and to stdout
 # Checks if key is a vaild number, does not take non int input.
-# Right now you will get errors if you try to decrypt the file output by rEncrypt (due to space charater will fix if time). Please copy result over removing the space at the end to dIn.txt.
+# Right now you will get errors if you try to decrypt the file output by rEncrypt (due to space character). Please copy result over removing the space at the end to dIn.txt.
 */
 void rDecrypt()
 {
@@ -159,6 +159,7 @@ void rDecrypt()
         }
         i++; //increments i to put the next letter though the loop untill the end of the string is reached
     }
+    dcMsg[i] = '\0'; //assigns the null pointer to the end of the string (so the string will stop reading)
     out = fopen("dOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
     fseek(out, 0, SEEK_SET); //Sets the file seeker to the start of the file
     fprintf(out, "%s\n", dcMsg); //Prints the decrypted message to a file
