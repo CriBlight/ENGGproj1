@@ -107,8 +107,8 @@ void rEncrypt()
 void rDecrypt()
 {
     FILE *in, *out; //Initialise file streams for input and output
-    int i = 0, f = 0, dckey = 0; //Initialise the key and loop counter
-    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {" "}, dkey[2]; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
+    int i = 0, f = 1, dckey = 0; //Initialise the key and loop counter
+    char inMsg[1024], fullMsg[1024], dcMsg[1024], spce[] = {' ', '\0'}, dkey[3]; //Initialise three charater arrays inMsg for the temp store, fullMsg for peacing together the string and to store the full message, dcMsg for storing the decrypted message and space to add a space.
     
     memset(inMsg,0,strlen(inMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(fullMsg,0,strlen(fullMsg)); //Resets the memory of the arrays (clears out junk and previous data)
@@ -134,7 +134,7 @@ void rDecrypt()
 
     fscanf(in, "%s", dkey); //Scans the word line of the file
 
-    if(dkey[f] == '#') //if the first word starts with a #, prints the key for checking
+    if(dkey[0] == '#') //if the first word starts with a #, prints the key for checking
     {
         printf("%s\n", dkey);
     }
