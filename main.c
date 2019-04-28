@@ -198,19 +198,48 @@ void rDecrypt()
 # SUBSTITUTION CIPHER Encrypt (sEncrypt)
 # Takes in a file called sIn.txt decrypts it by substituting a letter with another letter, print to both a file called sOut.txt and stdout.
 # There is no return value (void) as the funtion prints the output to a file.
-# Input is the file (key is hard coded might change if i have time). Output is the decrypted message both to a file called sOut.txt and to stdout
+# Input is the file, the key can either be a user input or a default key (to save time). Output is the decrypted message both to a file called sOut.txt and to stdout
 # will accept lowercase key and convert to upper. however if key is not in correct format (26 letters in a row) encryption will either be junk or not take place.
 */
 void sEncrypt()
 {
     FILE *in, *out; //Initialise file streams for input and output
-    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //Initialise five charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message, space for adding a space and key to store the key.(KEY = uwgtlzyxjmaksbocinqpevfhdr)
-    int i = 0; //Primary loop counter
+    char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[27], pkey[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //Initialise five charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message, space for adding a space and key to store the key.(KEY = uwgtlzyxjmaksbocinqpevfhdr)
+    int i = 0, opt = 0, x = 0; //Primary loop counter
     
     memset(eMsg,0,strlen(eMsg)); //clears the memory 
     memset(dMsg,0,strlen(dMsg));
     memset(fMsg,0,strlen(fMsg));
 
+    do //gets key from either user or default key (did this to save markers some time).
+    {
+        printf("Enter 1 to use the default key\nEnter 2 to specify a custom key\nOption : ");
+        scanf("%d", &opt);
+        if(opt == 1)
+        {
+            strcat(key, pkey); //copys default key to used key
+        }
+        else if(opt == 2)
+        {
+            printf("Enter key : ");
+            scanf("%s", &key); //user inputs key
+        }
+        else
+        {
+            printf("Invaild option\n"); //prints error if invaild opt.
+        }
+        
+    }while(opt != 1 && opt != 2);
+    
+    while (key[x] != '\0') //converts any lowercase letter to uppercase by subtracting 32 from there ascii value
+    {
+        if(key[x] >= 97 && key[x] <= 122)
+        {
+            key[x] -= 32;
+        }
+        x++;
+    }
+    
     in = fopen("sIn.txt", "r"); //opens sIn.txt in reading mode and assigns a pointer to it stored in "in"
 
     if(in == NULL) //if the file is not found it will show an error message and return to main
