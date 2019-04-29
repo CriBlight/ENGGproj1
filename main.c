@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> //imports libarys used for funtions.
 #include <stdlib.h>
 #include <string.h>
 //Auther: Christopher Baita C33289270
@@ -6,16 +6,16 @@
 
 /*
 # ROTATION CIPHER Encrypt (rEncrypt)
-# Takes in a file called eIn.txt, encrypts it by subtracting a user given key value from the ascii values of the charaters, Puts the charaters to uppercase if they are lowercase, prints the key and the message to both stdout and a file.
-# There is no return value (void) as the funtion prints the output to a file 
-# Inputs are the file, and the key given by the user, output is the encrypted message both to a file called eOut.txt and to stdout the key is also printed to a file.
-# Checks if key is a vaild number, does not take non int input.
+# Takes in a file called eIn.txt, encrypts it by subtracting a user given key value from the ascii values of the charaters in the message, Puts the charaters to uppercase if they are lowercase, prints the key and the message to both stdout and a file.
+# There is no return value (void) as the funtion prints the output to a file. 
+# Inputs are the file, and the key given by the user, output is the encrypted message both to a file called eOut.txt and to stdout, the key is also printed to the file.
+# Checks if key is a vaild number, will crash on non int input.
 */
 void rEncrypt()
 {
     FILE *input, *output; //Initialise file streams for input and output
     int key, i = 0; //Initialise the key and primary loop counter
-    char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "}; //Initialise three charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message and space to add a space.
+    char eMsg[1024], dMsg[1024], fMsg[1024], space[] = {" "}; //Initialise four charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message and space to add a space.
     
     memset(eMsg,0,strlen(eMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(dMsg,0,strlen(dMsg)); //Resets the memory of the arrays (clears out junk and previous data)
@@ -33,13 +33,13 @@ void rEncrypt()
     
     input = fopen("eIn.txt", "r"); //opens the file in read mode and assigns a pointer (location) to input.
 
-    if(input == NULL) //If there is no file print an error message and exit to main.
+    if(input == NULL) //If there is no file, print an error message and exit to main.
     {
         perror("fopen()");
         return;
     }
     
-    while(!feof(input)) //Takes input string by string until it reaches the end of the file adding a space each time
+    while(!feof(input)) //Takes input string by string until it reaches the end of the file, adding a space each time.
     {
         fscanf(input, "%s", eMsg); //takes a word in (until it reaches a new line or a space)
         strcat(fMsg, eMsg); //joins the word gotten above it to the full string
@@ -89,7 +89,7 @@ void rEncrypt()
     dMsg[i] = '\0'; //assigns the null pointer to the end of the string (so the string will stop reading)     
     output = fopen("eOut.txt", "w"); //opens the file stream for output in writing mode and assigns a pointer to output.
     fseek(output, 0, SEEK_SET); //Sets the file seeker to the start of the file
-    fprintf(output, "#%d\n", key);
+    fprintf(output, "#%d\n", key); //prints the key to the file defined by a #
     fprintf(output, "%s", dMsg); //prints the encrpted message to a file
     printf("\nYour encrypted message is : %s\n", dMsg); //prints the encrypted message to stdout
     fclose(input); //closes the file streams
@@ -99,7 +99,7 @@ void rEncrypt()
 
 /*
 # ROTATION CIPHER Decrypt (rDecrypt)
-# Takes in a file called dIn.txt decrypts it by adding a key specified in the file header to the ASCII values of the charaters. Puts the charaters to uppercase if they are lowercase, print to both stdout and a file.
+# Takes in a file called eOut.txt decrypts it by adding a key specified in the file header to the ASCII values of the charaters. Puts the charaters to uppercase if they are lowercase, print to both stdout and a file.
 # There is no return value (void) as the funtion prints the output to a file.
 # Inputs are the file and the key in the file header, output is the decrypted message both to a file called dOut.txt and to stdout
 # Does not take non int input.
@@ -123,18 +123,18 @@ void rDecrypt()
         return;
     }
 
-    fscanf(in, "%s", dkey); //Scans the word line of the file
+    fscanf(in, "%s", dkey); //Scans the first word of the file.
 
-    if(dkey[0] == '#') //if the first word starts with a #, prints the key for checking
+    if(dkey[0] == '#') //if the first word starts with a #, prints the key for checking.
     {
-        printf("%s\n", dkey);
+        printf("Key : %s\n", dkey);
     }
     else //if no key is found, the user is prompted for a key
     {
         printf("No file key found\n");
         printf("Enter key : ");
         scanf("%s", &dkey);
-        fseek(in, 0, SEEK_SET); //the fseek point is then set back to the start of the file to read the message.
+        fseek(in, 0, SEEK_SET); //the fseek point is then set back to the start of the file to read the message if the was no key.
     }
     
     if(dkey[0] == '#') //if the first word starts with a #, everything in the word (before a space or new line) is assigned to key
@@ -196,9 +196,9 @@ void rDecrypt()
 
 /*
 # SUBSTITUTION CIPHER Encrypt (sEncrypt)
-# Takes in a file called sIn.txt decrypts it by substituting a letter with another letter, print to both a file called sOut.txt and stdout.
+# Takes in a file called sIn.txt decrypts it by substituting a letter with another letter, print to both a file called sOut.txt and stdout, the key is also printed to the file with a #.
 # There is no return value (void) as the funtion prints the output to a file.
-# Input is the file, the key can either be a user input or a default key (to save time). Output is the decrypted message both to a file called sOut.txt and to stdout
+# Input is the file, the key can either be a user input or a default key (to save time). Output is the decrypted message both to a file called sOut.txt and to stdout.
 # will accept lowercase key and convert to upper. however if key is not in correct format (26 letters in a row) encryption will either be junk or not take place.
 */
 void sEncrypt()
@@ -373,7 +373,7 @@ void sDecrypt()
 
     if(key[ki] == '#') //if the first word starts with a #, prints the key for checking
     {
-        printf("%s\n", key);
+        printf("Key : %s\n", key);
     }
     else //if no key is found, the user is prompted for a key
     {
@@ -530,7 +530,7 @@ void sDecrypt()
         {
             dMsg[i] = fMsg[i];
         }
-        i++;
+        i++; //increments i so that the next letter will be decrypted.
     }
     
     dMsg[i - 1] = '\0'; //adds the null pointer to the end of the string
