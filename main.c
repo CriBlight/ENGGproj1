@@ -113,7 +113,7 @@ void rDecrypt()
     memset(inMsg,0,strlen(inMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(fullMsg,0,strlen(fullMsg)); //Resets the memory of the arrays (clears out junk and previous data)
     memset(dcMsg,0,strlen(dcMsg)); //Resets the memory of the arrays (clears out junk and previous data)
-
+    memset(dkey,0,strlen(dkey)); //Resets the memory of the arrays (clears out junk and previous data)
 
     in = fopen("eOut.txt", "r"); //opens the file in read mode and assigns a pointer (location) to in.
 
@@ -207,9 +207,10 @@ void sEncrypt()
     char eMsg[1024], fMsg[1024], dMsg[1024], spce[] = {" "}, key[27], pkey[] = {'U','W','G','T','L','Z','Y','X','J','M','A','K','S','B','O','C','I','N','Q','P','E','V','F','H','D','R','\0'}; //Initialise five charater arrays eMsg for the temp store, fMsg for peacing together the string and to store the full message, dMsg for storing the encrypted message, space for adding a space and key to store the key.(KEY = uwgtlzyxjmaksbocinqpevfhdr)
     int i = 0, opt = 0, x = 0; //Primary loop counter
     
-    memset(eMsg,0,strlen(eMsg)); //clears the memory 
-    memset(dMsg,0,strlen(dMsg));
-    memset(fMsg,0,strlen(fMsg));
+    memset(eMsg,0,strlen(eMsg));//Resets the memory of the arrays (clears out junk and previous data) 
+    memset(dMsg,0,strlen(dMsg));//Resets the memory of the arrays (clears out junk and previous data)
+    memset(fMsg,0,strlen(fMsg));//Resets the memory of the arrays (clears out junk and previous data)
+    memset(key,0,strlen(key));//Resets the memory of the arrays (clears out junk and previous data)
 
     do //gets key from either user or default key (did this to save some time).
     {
